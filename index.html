@@ -1,1 +1,391 @@
-g
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AmmazanBD - Your Premium eBook Library</title>
+  <!-- Tailwind CSS CDN for global styling utilities -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Integrated Custom Styling -->
+  <style>
+    /* === Integration of Critical Old CSS Styles === */
+    body {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        background-color: #f3f4f6; /* Modern bg from Tailwind but explicit here */
+    }
+
+    /* Standard border utility for items to receive the hover effect */
+    .amazon-hover-border {
+        border: 1.5px solid transparent;
+        border-radius: 2px;
+        transition: all 0.1s ease-in-out;
+    }
+
+    /* Apply the old white hover border effect to modern nav elements */
+    .amazon-hover-border:hover {
+        border: 1.5px solid white;
+    }
+
+    /* Specific styles for eBook grid text to match modern aesthetic */
+    .shop-section h2 {
+        font-family: 'Hind Siliguri', sans-serif; /* You can use standard font too if Hind isn't loaded */
+    }
+  </style>
+</head>
+<body class="font-sans antialiased text-slate-800">
+
+  <!-- === LOGIN GATE: Content Hiding === -->
+  <!-- This 'loading-overlay' will show while we verify the login. -->
+  <div id="loadingOverlay" class="fixed inset-0 bg-white/95 z-[9999] flex flex-col items-center justify-center space-y-6">
+    <div class="inline-block p-4 bg-teal-50 rounded-full border border-teal-100 mb-2">
+      <i class="fa-solid fa-book-open fa-spin text-5xl text-teal-600"></i>
+    </div>
+    <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">AmmazanBD</h1>
+    <p class="text-lg font-bold text-slate-700">অ্যাকাউন্ট যাচাই করা হচ্ছে...</p>
+    <p class="text-sm text-slate-500">অনুগ্রহ করে একটু অপেক্ষা করুন।</p>
+  </div>
+
+  <!-- The 'mainContent' is hidden by default using Tailwind's 'hidden' class -->
+  <main id="mainContent" class="hidden">
+    
+    <header>
+      <div class="navbar bg-slate-900 text-white px-5 py-2 flex items-center justify-between shadow-lg">
+        <!-- Added amazon-hover-border class here -->
+        <div class="nav-logo amazon-hover-border p-1 transition cursor-pointer">
+          <div class="logo w-24 h-10 bg-contain bg-center bg-no-repeat" style="background-image: url('./images/amazon_logo2.png');"></div>
+        </div>
+
+        <!-- Added amazon-hover-border class here -->
+        <div class="nav-address amazon-hover-border p-1 transition flex items-center space-x-1 cursor-pointer">
+          <i class="fa-solid fa-location-dot text-teal-400"></i>
+          <div>
+            <p class="add-first text-xs text-slate-400">Deliver to</p>
+            <p class="add-second text-sm font-bold">Bangladesh</p>
+          </div>
+        </div>
+
+        <div class="nav-search flex-grow max-w-2xl mx-4 flex items-center bg-white rounded-md overflow-hidden shadow-inner focus-within:ring-2 focus-within:ring-teal-500">
+          <select class="search-select bg-slate-200 text-slate-700 px-3 py-2 text-sm focus:outline-none">
+            <option>All</option>
+          </select>
+          <input placeholder="Search AmmazanBD" class="search-input flex-grow px-4 py-2 text-slate-900 focus:outline-none">
+          <i class="fa-solid fa-magnifying-glass search-icon bg-teal-500 text-white p-3.5 hover:bg-teal-600 transition cursor-pointer"></i>
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <!-- Added amazon-hover-border class to specific parent divs -->
+          <div class="nav-signin amazon-hover-border p-1 transition text-center cursor-pointer">
+            <p class="text-xs text-slate-400">Hello, sign in</p>
+            <p class="nav-second text-sm font-bold">Account & Lists</p>
+          </div>
+
+          <div class="nav-return amazon-hover-border p-1 transition text-center cursor-pointer">
+            <p class="text-xs text-slate-400">Returns</p>
+            <p class="nav-second text-sm font-bold">& Orders</p>
+          </div>
+
+          <div class="nav-cart amazon-hover-border p-1 transition flex items-center space-x-2 cursor-pointer">
+            <i class="fa-solid fa-cart-arrow-down text-xl"></i>
+            <p class="text-sm font-bold">Cart</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel bg-slate-800 text-white px-5 py-1.5 flex items-center space-x-6 shadow shadow-slate-900">
+        <div class="panel-all hover:text-teal-300 transition flex items-center space-x-1 cursor-pointer amazon-hover-border">
+          <i class="fa-solid fa-bars"></i>
+          <span class="font-bold">All</span>
+        </div>
+
+        <div class="panel-ops flex-grow flex items-center space-x-5 text-sm">
+          <p class="hover:text-teal-300 transition cursor-pointer amazon-hover-border">Today's Deals</p>
+          <p class="hover:text-teal-300 transition cursor-pointer amazon-hover-border">Customer Service</p>
+          <p class="hover:text-teal-300 transition cursor-pointer amazon-hover-border">Registry</p>
+          <p class="hover:text-teal-300 transition cursor-pointer amazon-hover-border">Gift Cards</p>
+          <p class="hover:text-teal-300 transition cursor-pointer amazon-hover-border">Sell</p>
+        </div>
+
+        <div class="panel-deals font-bold text-teal-300 amazon-hover-border">
+          Shop Deals in eBooks
+        </div>
+      </div>
+    </header>
+
+    <div class="hero-section-pro bg-teal-900 text-white text-center py-10 px-5 shadow-inner">
+      <div class="hero-msg max-w-4xl mx-auto space-y-3">
+        <p class="text-3xl font-extrabold tracking-tight">You are on AmmazanBD.</p>
+        <p class="text-lg text-teal-100">Let's Enjoy 10,000+ Premium eBooks to up-scale your Productivity & Perspective of Your Life.</p>
+      </div>
+    </div>
+
+    <!-- The Shop Section with updated links -->
+    <div class="shop-section max-w-7xl mx-auto p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+      <!-- Box 1 -->
+      <div class="box bg-white p-6 rounded-2xl shadow-sm border border-slate-100 transform transition hover:scale-105 hover:shadow-lg">
+        <div class="box-content space-y-4">
+          <h2 class="text-xl font-bold text-slate-900 border-b pb-2">আল কোরআন</h2>
+          <div class="box-image w-full h-48 bg-cover bg-center rounded-lg shadow-inner" style="background-image: url('./images/আল কোরআন.jpeg');"></div>
+          <a href="https://drive.google.com/drive/folders/1vcS3xMkbMyrCtLIniKLTcKjMvr53Bt_P?usp=sharing" target="_blank" class="block w-full text-center py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl transition">
+            Read Now
+          </a>
+        </div>
+      </div>
+      
+      <!-- Box 2 -->
+      <div class="box bg-white p-6 rounded-2xl shadow-sm border border-slate-100 transform transition hover:scale-105 hover:shadow-lg">
+        <div class="box-content space-y-4">
+          <h2 class="text-xl font-bold text-slate-900 border-b pb-2">আল হাদিস</h2>
+          <div class="box-image w-full h-48 bg-cover bg-center rounded-lg shadow-inner" style="background-image: url('./images/আল হাদিস.jpeg');"></div>
+          <a href="https://drive.google.com/drive/folders/1spkPHiCdgjlP6AtM00PI1KZlJMBbgmO6?usp=sharing" target="_blank" class="block w-full text-center py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl transition">
+            Read Now
+          </a>
+        </div>
+      </div>
+      
+      <!-- Box 3 -->
+      <div class="box bg-white p-6 rounded-2xl shadow-sm border border-slate-100 transform transition hover:scale-105 hover:shadow-lg">
+        <div class="box-content space-y-4">
+          <h2 class="text-xl font-bold text-slate-900 border-b pb-2">২,০০০+ইসলামিক বই</h2>
+          <div class="box-image w-full h-48 bg-cover bg-center rounded-lg shadow-inner" style="background-image: url('./images/2000 islamic books.jpeg');"></div>
+          <a href="https://drive.google.com/drive/folders/1_dsUZ08rwONYm33S7HSHC1RZjf_voBrU" target="_blank" class="block w-full text-center py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl transition">
+            Read Now
+          </a>
+        </div>
+      </div>
+      
+      <!-- Box 4 -->
+      <div class="box bg-white p-6 rounded-2xl shadow-sm border border-slate-100 transform transition hover:scale-105 hover:shadow-lg">
+        <div class="box-content space-y-4">
+          <h2 class="text-xl font-bold text-slate-900 border-b pb-2">ইসলামিক ইতিহাস</h2>
+          <div class="box-image w-full h-48 bg-cover bg-center rounded-lg shadow-inner" style="background-image: url('./images/islamic history.jpeg');"></div>
+          <a href="https://drive.google.com/drive/folders/1j7HC2aoxAALZBNrdCVNepBq6_uk50MJG?usp=sharing" target="_blank" class="block w-full text-center py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl transition">
+            Read Now
+          </a>
+        </div>
+      </div>
+      
+      <!-- Box 5 -->
+      <div class="box bg-white p-6 rounded-2xl shadow-sm border border-slate-100 transform transition hover:scale-105 hover:shadow-lg">
+        <div class="box-content space-y-4">
+          <h2 class="text-xl font-bold text-slate-900 border-b pb-2">ইসলামিক সাহিত্য</h2>
+          <div class="box-image w-full h-48 bg-cover bg-center rounded-lg shadow-inner" style="background-image: url('./images/islamic literature.jpeg');"></div>
+          <a href="https://drive.google.com/drive/folders/1FqxzyQjMVYJyyixPzYxhTMDSF7bCSttZ?usp=sharing" target="_blank" class="block w-full text-center py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl transition">
+            Read Now
+          </a>
+        </div>
+      </div>
+      
+      <!-- Box 6 -->
+      <div class="box bg-white p-6 rounded-2xl shadow-sm border border-slate-100 transform transition hover:scale-105 hover:shadow-lg">
+        <div class="box-content space-y-4">
+          <h2 class="text-xl font-bold text-slate-900 border-b pb-2">২,০০০+ পি ডি এফ বই</h2>
+          <div class="box-image w-full h-48 bg-cover bg-center rounded-lg shadow-inner" style="background-image: url('./images/২,০০০ পি ডি এফ বই.jpeg');"></div>
+          <a href="https://drive.google.com/folderview?id=1dgkfYgaG9HksnFL1MWyTH8ivwPb8CFev" target="_blank" class="block w-full text-center py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl transition">
+            Read Now
+          </a>
+        </div>
+      </div>
+      
+      <!-- Box 7 -->
+      <div class="box bg-white p-6 rounded-2xl shadow-sm border border-slate-100 transform transition hover:scale-105 hover:shadow-lg">
+        <div class="box-content space-y-4">
+          <h2 class="text-xl font-bold text-slate-900 border-b pb-2">১৩০০+ পি ডি এফ বই</h2>
+          <div class="box-image w-full h-48 bg-cover bg-center rounded-lg shadow-inner" style="background-image: url('./images/১৩০০ পি ডি এফ বই.jpeg');"></div>
+          <a href="https://drive.google.com/folderview?id=1Zgm8lDTVvUFnU8p35kh4bRSObt-iJIrh" target="_blank" class="block w-full text-center py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl transition">
+            Read Now
+          </a>
+        </div>
+      </div>
+      
+      <!-- Box 8 -->
+      <div class="box bg-white p-6 rounded-2xl shadow-sm border border-slate-100 transform transition hover:scale-105 hover:shadow-lg">
+        <div class="box-content space-y-4">
+          <h2 class="text-xl font-bold text-slate-900 border-b pb-2">মোটিভিশনাল বুক 01</h2>
+          <div class="box-image w-full h-48 bg-cover bg-center rounded-lg shadow-inner" style="background-image: url('./images/মোটিভিশনাল বুক 01.jpeg');"></div>
+          <a href="https://drive.google.com/drive/folders/1iILztYqzDjHkDR0Lz6hGUy35UYOu2Sv8" target="_blank" class="block w-full text-center py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl transition">
+            Read Now
+          </a>
+        </div>
+      </div>
+      
+      <!-- Box 9 -->
+      <div class="box bg-white p-6 rounded-2xl shadow-sm border border-slate-100 transform transition hover:scale-105 hover:shadow-lg">
+        <div class="box-content space-y-4">
+          <h2 class="text-xl font-bold text-slate-900 border-b pb-2">৪০ বাংলা অনুবাদ মোটিভেশনাল</h2>
+          <div class="box-image w-full h-48 bg-cover bg-center rounded-lg shadow-inner" style="background-image: url('./images/৪০ বাংলা অনুবাদ মোটিভেশনাল.jpeg');"></div>
+          <a href="https://drive.google.com/drive/folders/1HCYsjSflAGqiYiEz-IDwDSxCJgHrnPKo?fbclid=IwAR22YPFWECacisjN5xw2gtlK6h6D0-SQzVoR7dwIt9vA2pC_IRExjqqNvds" target="_blank" class="block w-full text-center py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl transition">
+            Read Now
+          </a>
+        </div>
+      </div>
+      
+      <!-- Box 10 -->
+      <div class="box bg-white p-6 rounded-2xl shadow-sm border border-slate-100 transform transition hover:scale-105 hover:shadow-lg">
+        <div class="box-content space-y-4">
+          <h2 class="text-xl font-bold text-slate-900 border-b pb-2">মোটিভেশন বুকস 02</h2>
+          <div class="box-image w-full h-48 bg-cover bg-center rounded-lg shadow-inner" style="background-image: url('./images/মোটিভেশন বুকস 02.jpeg');"></div>
+          <a href="https://drive.google.com/drive/folders/1UgemKvd1tyuk6ygZzYO5RyJirYUn1uRN" target="_blank" class="block w-full text-center py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl transition">
+            Read Now
+          </a>
+        </div>
+      </div>
+      
+      <!-- Box 11 -->
+      <div class="box bg-white p-6 rounded-2xl shadow-sm border border-slate-100 transform transition hover:scale-105 hover:shadow-lg">
+        <div class="box-content space-y-4">
+          <h2 class="text-xl font-bold text-slate-900 border-b pb-2">৯০ ইসলামিক গল্প বই</h2>
+          <div class="box-image w-full h-48 bg-cover bg-center rounded-lg shadow-inner" style="background-image: url('./images/৯০ ইসলামিক গল্প বই.jpeg');"></div>
+          <a href="https://drive.google.com/file/d/12g3VUl_x-pphAkgeMHLcIMSZB4Qk_rVu/view?fbclid=IwAR3BqBNeHfiH7_UgLh0rAQZ2iDWQw9TIx-fGHzVLk2efkSmChLeV9RfvNbw" target="_blank" class="block w-full text-center py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl transition">
+            Read Now
+          </a>
+        </div>
+      </div>
+      
+      <!-- Box 12 -->
+      <div class="box bg-white p-6 rounded-2xl shadow-sm border border-slate-100 transform transition hover:scale-105 hover:shadow-lg">
+        <div class="box-content space-y-4">
+          <h2 class="text-xl font-bold text-slate-900 border-b pb-2">ওয়েস্টার্ন book</h2>
+          <div class="box-image w-full h-48 bg-cover bg-center rounded-lg shadow-inner" style="background-image: url('./images/ওয়েস্টার্ন book.jpeg');"></div>
+          <a href="https://drive.google.com/drive/folders/1FHRaErtur26AzOMDqxXBP3DooL2s6owR" target="_blank" class="block w-full text-center py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl transition">
+            Read Now
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <footer class="bg-slate-900 text-slate-300 mt-10">
+      <div class="foot-panel1 text-center py-4 bg-slate-800 hover:bg-slate-700 transition cursor-pointer text-sm font-bold">
+        Back to Top
+      </div>
+
+      <div class="foot-panel2 max-w-7xl mx-auto p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-sm">
+        <ul class="space-y-2">
+          <p class="font-bold text-white text-base mb-3">Get to Know Us</p>
+          <li><a class="hover:text-teal-300 transition">Careers</a></li>
+          <li><a class="hover:text-teal-300 transition">Blog</a></li>
+          <li><a class="hover:text-teal-300 transition">About AmmazanBD</a></li>
+          <li><a class="hover:text-teal-300 transition">Investor Relations</a></li>
+          <li><a class="hover:text-teal-300 transition">Ammazan Devices</a></li>
+          <li><a class="hover:text-teal-300 transition">Ammazan Science</a></li>
+        </ul>
+
+        <ul class="space-y-2">
+          <p class="font-bold text-white text-base mb-3">Make Money with Us</p>
+          <li><a class="hover:text-teal-300 transition">Sell products on Amazon</a></li>
+          <li><a class="hover:text-teal-300 transition">Sell on Amazon Business</a></li>
+          <li><a class="hover:text-teal-300 transition">Sell apps on Amazon</a></li>
+          <li><a class="hover:text-teal-300 transition">Become an Affiliate</a></li>
+          <li><a class="hover:text-teal-300 transition">Advertise Your Products</a></li>
+          <li><a class="hover:text-teal-300 transition">Self-Publish with Us</a></li>
+          <li><a class="hover:text-teal-300 transition">Host an AmmazanBD Hub</a></li>
+          <li><a class="hover:text-teal-300 transition">See More Make Money with Us</a></li>
+        </ul>
+
+        <ul class="space-y-2">
+          <p class="font-bold text-white text-base mb-3">Payment Products</p>
+          <li><a class="hover:text-teal-300 transition">Amazon Business Card</a></li>
+          <li><a class="hover:text-teal-300 transition">Shop with Points</a></li>
+          <li><a class="hover:text-teal-300 transition">Reload Your Balance</a></li>
+          <li><a class="hover:text-teal-300 transition">AmmazanBD Currency Converter</a></li>
+        </ul>
+
+        <ul class="space-y-2">
+          <p class="font-bold text-white text-base mb-3">Let Us Help You</p>
+          <li><a class="hover:text-teal-300 transition">COVID-19 Support</a></li>
+          <li><a class="hover:text-teal-300 transition">Your Account</a></li>
+          <li><a class="hover:text-teal-300 transition">Your Orders</a></li>
+          <li><a class="hover:text-teal-300 transition">Shipping Rates & Policies</a></li>
+          <li><a class="hover:text-teal-300 transition">Returns & Replacements</a></li>
+          <li><a class="hover:text-teal-300 transition">Manage Content and Devices</a></li>
+          <li><a class="hover:text-teal-300 transition">Amazon Assistant</a></li>
+          <li><a class="hover:text-teal-300 transition">Help</a></li>
+        </ul>
+      </div>
+
+      <div class="foot-panel3 border-t border-slate-700 py-6 text-center">
+        <div class="logo w-24 h-10 mx-auto bg-contain bg-center bg-no-repeat" style="background-image: url('./images/amazon_logo2.png');"></div>
+      </div>
+
+      <div class="foot-panel4 bg-slate-950 text-slate-500 py-6 px-5 text-center text-xs">
+        <div class="pages space-x-4 mb-2">
+          <a class="hover:text-teal-300 transition">Conditions of Use</a>
+          <a class="hover:text-teal-300 transition">Privacy Notice</a>
+          <a class="hover:text-teal-300 transition">Your Ads privacy Choices</a>
+        </div>
+        <div class="copyright">
+          © 1996-2023, AmmazanBD.com, Inc. or its affiliates
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- === LOGIN GATE: Content Gating Script === -->
+  <script>
+    // === JSONBin Configuration (REPLACE THESE KEYS WITH YOURS) ===
+    const BIN_ID = 'YOUR_BIN_ID'; 
+    const MASTER_KEY = 'YOUR_MASTER_KEY'; 
+    const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}/latest`;
+
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const mainContent = document.getElementById('mainContent');
+
+    async function verifyLogin() {
+        const loggedInUser = sessionStorage.getItem('ammazan_user');
+
+        if (!loggedInUser) {
+            window.location.href = 'login.html'; 
+            return; 
+        }
+
+        try {
+            const res = await fetch(API_URL, {
+                headers: { 'X-Master-Key': MASTER_KEY }
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                const orders = Array.isArray(data.record) ? data.record : [];
+                const validOrder = orders.find(order => order.user === loggedInUser);
+
+                if (validOrder) {
+                    mainContent.classList.remove('hidden');
+                    loadingOverlay.classList.add('hidden');
+                } else {
+                    showGatingError('অ্যাকাউন্ট ভেরিফিকেশন ব্যর্থ হয়েছে। অনুগ্রহ করে আবার লগইন করুন।');
+                }
+            } else {
+                showGatingError('সার্ভার কানেকশন ত্রুটি। অনুগ্রহ করে একটু পরে আবার চেষ্টা করুন।');
+            }
+        } catch (err) {
+            console.error('Inner verifyLogin error:', err);
+            showGatingError('একটি অভ্যন্তরীণ ত্রুটি হয়েছে। দয়া করে আবার চেষ্টা করুন।');
+        }
+    }
+
+    verifyLogin();
+
+    function showGatingError(message) {
+        loadingOverlay.innerHTML = `
+            <div class="text-center space-y-6">
+                <div class="inline-block p-4 bg-rose-50 rounded-full border border-rose-100 mb-2">
+                    <i class="fa-solid fa-circle-xmark text-5xl text-rose-600"></i>
+                </div>
+                <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">ভুল অ্যাক্সেস</h1>
+                <p class="text-lg font-bold text-rose-700">${message}</p>
+                <p class="text-sm text-slate-500">আপনাকে লগইন পেজে নিয়ে যাওয়া হচ্ছে...</p>
+            </div>
+        `;
+        setTimeout(() => {
+            sessionStorage.removeItem('ammazan_user'); 
+            window.location.href = 'login.html';
+        }, 4000); 
+    }
+  </script>
+</body>
+</html>
+
