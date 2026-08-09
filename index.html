@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AmmazanBD - Order Management Dashboard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen text-slate-800">
+
+    <!-- Header Navigation -->
+    <header class="bg-teal-700 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-book-open text-2xl text-yellow-300"></i>
+                <h1 class="text-2xl font-bold tracking-wide">AmmazanBD Admin</h1>
+            </div>
+            <div class="text-sm bg-teal-800 px-3 py-1 rounded-full text-teal-100 border border-teal-600">
+                <i class="fa-solid fa-shield-halved mr-1"></i> Order & Password Manager
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        <!-- Left Column: Order & Password Form -->
+        <section class="lg:col-span-1 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 h-fit">
+            <h2 class="text-xl font-bold text-slate-800 mb-4 flex items-center border-b pb-3">
+                <i class="fa-solid fa-cart-plus text-teal-600 mr-2"></i> নতুন অর্ডার এন্ট্রি
+            </h2>
+
+            <form id="orderForm" class="space-y-4">
+                <!-- Customer Name -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">গ্রাহকের নাম / ID</label>
+                    <input type="text" id="customerName" placeholder="যেমন: Rahim Ahmed" required
+                        class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                </div>
+
+                <!-- Customer Phone / Transaction Info -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">মোবাইল / ট্রানজেকশন ID</label>
+                    <input type="text" id="transactionId" placeholder="যেমন: 017XXXXXXX বা TrxID" required
+                        class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                </div>
+
+                <!-- Payment Method -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">পেমেন্ট মেথড</label>
+                    <select id="paymentMethod" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                        <option value="bKash">bKash</option>
+                        <option value="Nagad">Nagad</option>
+                        <option value="Rocket">Rocket</option>
+                    </select>
+                </div>
+
+                <!-- Amount -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">টাকার পরিমাণ (BDT)</label>
+                    <input type="number" id="amount" value="99" required
+                        class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none bg-slate-50 font-bold text-teal-700">
+                </div>
+
+                <!-- Auto Generated Credentials -->
+                <div class="p-4 bg-teal-50 rounded-xl border border-teal-100 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-semibold text-teal-800 uppercase tracking-wider">অটো লগইন ইনফো</span>
+                        <button type="button" onclick="generateCredentials()" class="text-xs text-teal-600 hover:text-teal-800 font-bold flex items-center">
+                            <i class="fa-solid fa-arrows-rotate mr-1"></i> নতুন জেনারেট
+                        </button>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-xs text-slate-500">ইউজার আইডি (Email/User):</label>
+                        <input type="text" id="generatedUser" readonly class="w-full text-sm font-mono font-bold text-slate-700 bg-white px-3 py-1.5 border border-teal-200 rounded">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-500">পাসওয়ার্ড (Password):</label>
+                        <input type="text" id="generatedPass" readonly class="w-full text-sm font-mono font-bold text-slate-700 bg-white px-3 py-1.5 border border-teal-200 rounded">
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-lg shadow-md transition duration-200 flex justify-center items-center">
+                    <i class="fa-solid fa-check-circle mr-2"></i> অর্ডার সংরক্ষণ করুন
+                </button>
+            </form>
+        </section>
+
+        <!-- Right Column: Order List & Quick Actions -->
+        <section class="lg:col-span-2 space-y-6">
+
+            <!-- Summary Stats -->
+            <div class="grid grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-center">
+                    <span class="block text-2xl font-bold text-slate-800" id="totalOrders">0</span>
+                    <span class="text-xs text-slate-500 font-medium">মোট অর্ডার</span>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-center">
+                    <span class="block text-2xl font-bold text-teal-600" id="totalRevenue">৳0</span>
+                    <span class="text-xs text-slate-500 font-medium">মোট আয়</span>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-center">
+                    <span class="block text-2xl font-bold text-emerald-600" id="deliveredCount">0</span>
+                    <span class="text-xs text-slate-500 font-medium">অ্যাক্সেস প্রদান সম্পন্ন</span>
+                </div>
+            </div>
+
+            <!-- Orders Table Container -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-5 border-b border-slate-100 flex justify-between items-center">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <i class="fa-solid fa-list-check text-teal-600 mr-2"></i> সাম্প্রতিক অর্ডারসমূহ
+                    </h2>
+                    <input type="text" id="searchBox" onkeyup="filterOrders()" placeholder="খুঁজুন (নাম/আইডি)..." 
+                        class="px-3 py-1.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 text-slate-500 text-xs font-semibold uppercase tracking-wider border-b">
+                                <th class="p-4">গ্রাহক</th>
+                                <th class="p-4">পেমেন্ট</th>
+                                <th class="p-4">লগইন ক্রেডেনশিয়াল</th>
+                                <th class="p-4 text-center">অ্যাকশন</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody" class="divide-y divide-slate-100 text-sm">
+                            <!-- Dynamic Content Inserted Here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Empty State Message -->
+                <div id="emptyMessage" class="p-8 text-center text-slate-400">
+                    <i class="fa-solid fa-inbox text-4xl mb-2"></i>
+                    <p>এখনো কোনো অর্ডার যুক্ত করা হয়নি।</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-800 text-white px-5 py-3 rounded-lg shadow-xl hidden transition duration-300 flex items-center space-x-2">
+        <i class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span id="toastMessage">অ্যাকশন সম্পন্ন হয়েছে</span>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        let orders = JSON.parse(localStorage.getItem('ammazan_orders')) || [];
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            generateCredentials();
+            renderOrders();
+        });
+
+        // Generate Random User and Password
+        function generateCredentials() {
+            const randomNum = Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('generatedUser').value = `user_${randomNum}@ammazan.com`;
+            document.getElementById('generatedPass').value = `BD#${Math.floor(100000 + Math.random() * 900000)}`;
+        }
+
+        // Add Order Form Submit
+        document.getElementById('orderForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const newOrder = {
+                id: Date.now(),
+                name: document.getElementById('customerName').value,
+                trx: document.getElementById('transactionId').value,
+                method: document.getElementById('paymentMethod').value,
+                amount: parseFloat(document.getElementById('amount').value),
+                user: document.getElementById('generatedUser').value,
+                pass: document.getElementById('generatedPass').value,
+                date: new Date().toLocaleDateString('bn-BD', { hour: '2-digit', minute: '2-digit' })
+            };
+
+            orders.unshift(newOrder);
+            saveAndRefresh();
+            
+            // Reset Form fields
+            document.getElementById('customerName').value = '';
+            document.getElementById('transactionId').value = '';
+            generateCredentials();
+
+            showToast('নতুন অর্ডার সফলভাবে যুক্ত হয়েছে!');
+        });
+
+        // Render Orders Table
+        function renderOrders(filterText = '') {
+            const tbody = document.getElementById('ordersTableBody');
+            const emptyMessage = document.getElementById('emptyMessage');
+            tbody.innerHTML = '';
+
+            const filteredOrders = orders.filter(o => 
+                o.name.toLowerCase().includes(filterText.toLowerCase()) || 
+                o.trx.toLowerCase().includes(filterText.toLowerCase())
+            );
+
+            if (filteredOrders.length === 0) {
+                emptyMessage.classList.remove('hidden');
+            } else {
+                emptyMessage.classList.add('hidden');
+            }
+
+            filteredOrders.forEach(order => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition duration-150";
+                tr.innerHTML = `
+                    <td class="p-4">
+                        <div class="font-bold text-slate-800">${escapeHtml(order.name)}</div>
+                        <div class="text-xs text-slate-400">${order.date}</div>
+                    </td>
+                    <td class="p-4">
+                        <span class="inline-block px-2 py-0.5 text-xs rounded bg-teal-100 text-teal-800 font-semibold mb-1">${order.method}</span>
+                        <div class="text-xs text-slate-600 font-mono">${escapeHtml(order.trx)}</div>
+                        <div class="text-xs font-bold text-emerald-600">৳${order.amount}</div>
+                    </td>
+                    <td class="p-4 font-mono text-xs space-y-1">
+                        <div><span class="text-slate-400">ID:</span> <span class="font-semibold text-slate-700">${order.user}</span></div>
+                        <div><span class="text-slate-400">Pass:</span> <span class="font-semibold text-teal-700">${order.pass}</span></div>
+                    </td>
+                    <td class="p-4 text-center">
+                        <div class="flex justify-center space-x-2">
+                            <button onclick="copyResponse('${order.user}', '${order.pass}')" title="কপি মেসেজ" 
+                                class="bg-teal-50 hover:bg-teal-100 text-teal-700 border border-teal-200 px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center">
+                                <i class="fa-solid fa-copy mr-1"></i> মেসেজ কপি
+                            </button>
+                            <button onclick="deleteOrder(${order.id})" title="মুছে ফেলুন" 
+                                class="bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 px-2 py-1.5 rounded-lg text-xs transition">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            updateStats();
+        }
+
+        // Copy Client Quick Response Text to Clipboard
+        function copyResponse(user, pass) {
+            const responseText = `অভিনন্দন! আপনার পেমেন্ট সফলভাবে যাচাই করা হয়েছে। 😊\n\nআপনার ১০,০০০+ ই-বুক ব্যবহারের অ্যাকাউন্ট লগইন তথ্য:\n\n🌐 ওয়েবসাইট: ammazanbd.github.io\n👤 ইউজার আইডি: ${user}\n🔑 পাসওয়ার্ড: ${pass}\n\nধন্যবাদ আম্মাজানবিডির সাথে থাকার জন্য!`;
+            
+            navigator.clipboard.writeText(responseText).then(() => {
+                showToast('লগইন মেসেজ ক্লিপবোর্ডে কপি হয়েছে!');
+            });
+        }
+
+        // Delete Order
+        function deleteOrder(id) {
+            if (confirm('আপনি কি এই অর্ডারটি মুছে ফেলতে চান?')) {
+                orders = orders.filter(o => o.id !== id);
+                saveAndRefresh();
+                showToast('অর্ডার মুছে ফেলা হয়েছে।');
+            }
+        }
+
+        // Filter Orders with Search
+        function filterOrders() {
+            const text = document.getElementById('searchBox').value;
+            renderOrders(text);
+        }
+
+        // Save to LocalStorage and Update View
+        function saveAndRefresh() {
+            localStorage.setItem('ammazan_orders', JSON.stringify(orders));
+            renderOrders();
+        }
+
+        // Update Top Summary Stats
+        function updateStats() {
+            document.getElementById('totalOrders').innerText = orders.length;
+            const revenue = orders.reduce((sum, o) => sum + o.amount, 0);
+            document.getElementById('totalRevenue').innerText = `৳${revenue}`;
+            document.getElementById('deliveredCount').innerText = orders.length;
+        }
+
+        // Helper: Show Toast Notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').innerText = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Helper: Prevent XSS
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>
